@@ -1,6 +1,6 @@
 === Weight based shipping for WooCommerce ===
 Contributors: dangoodman
-Tags: woocommerce, shipping, weight
+Tags: woocommerce, shipping, weight, commerce, ecommerce, shop
 Requires at least: 3.0.1
 Tested up to: 3.5.2
 Stable tag: trunk
@@ -18,12 +18,6 @@ Plugin adds a simple weight based shipping method in WooCommerce. You can find i
 1. Upload `woocommerce-weight-based-shipping` folder  to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
-== Frequently asked questions ==
-
 == Screenshots ==
 
-1. https://dl.dropboxusercontent.com/u/23623612/woowbs-settings-screenshot.png
-
-== Changelog ==
-
-== Upgrade notice ==
+1. Settings page
