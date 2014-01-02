@@ -2,7 +2,7 @@
 Contributors: dangoodman
 Tags: woocommerce, shipping, weight, commerce, ecommerce, shop
 Requires at least: 3.0.1
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,6 +12,8 @@ Simple weight based shipping method for WooCommerce
 == Description ==
 
 Plugin adds a simple weight based shipping method in WooCommerce. You can find its settings under the WooCommerce -> Settings -> Shipping.
+
+Plugin is moved to http://codecanyon.net/. Plese look for it there.
 
 == Installation ==
 
