@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 1.3
+ * Version: 1.4
  * Author: dangoodman
  */
 
@@ -32,7 +32,7 @@ function init_woowbs() {
 
 			$this->enabled      = $this->settings['enabled'];
 			$this->title        = $this->settings['title'];
-			$this->availability = 'specific';
+            $this->availability = 'all';
 			$this->type         = 'order';
 			$this->tax_status   = $this->settings['tax_status'];
 			$this->fee          = $this->settings['fee'];
