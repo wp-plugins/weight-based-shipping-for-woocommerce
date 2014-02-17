@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 1.4
+ * Version: 1.5
  * Author: dangoodman
  */
 
@@ -16,7 +16,7 @@ function init_woowbs() {
 
 		function __construct() {
 			$this->id           = 'WC_Weight_Based_Shipping';
-			$this->method_title = __( 'Weight based', 'woocommerce' );
+			$this->method_title = __( 'Weight Based', 'woocommerce' );
 
 			$this->admin_page_heading     = __( 'Weight based shipping', 'woocommerce' );
 			$this->admin_page_description = __( 'Define shipping by weight', 'woocommerce' );
@@ -30,12 +30,17 @@ function init_woowbs() {
 			$this->init_form_fields();
 			$this->init_settings();
 
-			$this->enabled      = $this->settings['enabled'];
-			$this->title        = $this->settings['title'];
-            $this->availability = 'all';
-			$this->type         = 'order';
-			$this->tax_status   = $this->settings['tax_status'];
-			$this->fee          = $this->settings['fee'];
+			$this->enabled          = $this->get_option('enabled');
+			$this->title            = $this->get_option('title');
+            $this->availability     = $this->get_option('availability');
+            $this->countries 	    = $this->get_option('countries');
+			$this->type             = 'order';
+			$this->tax_status       = $this->get_option('tax_status');
+			$this->fee              = $this->get_option('fee');
+
+            if (empty($this->countries)) {
+                $this->availability = $this->settings['availability'] = 'all';
+            }
 		}
 
 		function init_form_fields() {
@@ -52,6 +57,27 @@ function init_woowbs() {
 					'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce' ),
 					'default'     => __( 'Weight Based Shipping', 'woocommerce' ),
 				),
+                'availability' => array(
+                    'title' 		=> __( 'Availability', 'woocommerce' ),
+                    'type' 			=> 'select',
+                    'default' 		=> 'all',
+                    'class'			=> 'availability',
+                    'options'		=> array(
+                        'all' 		=> __( 'All allowed countries', 'woocommerce' ),
+                        'specific' 	=> __( 'Specific Countries', 'woocommerce' ),
+                    ),
+                ),
+                'countries' => array(
+                    'title' 		=> __( 'Specific Countries', 'woocommerce' ),
+                    'type' 			=> 'multiselect',
+                    'class'			=> 'chosen_select',
+                    'css'			=> 'width: 450px;',
+                    'default' 		=> '',
+                    'options'		=> WC()->countries->get_shipping_countries(),
+                    'custom_attributes' => array(
+                        'data-placeholder' => __( 'Select some countries', 'woocommerce' )
+                    )
+                ),
 				'tax_status' => array(
 					'title'       => __( 'Tax Status', 'woocommerce' ),
 					'type'        => 'select',
