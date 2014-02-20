@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 1.5
+ * Version: 1.5.1
  * Author: dangoodman
  */
 
@@ -44,6 +44,13 @@ function init_woowbs() {
 		}
 
 		function init_form_fields() {
+
+            // To be compatible with WC < 2.1
+            $woocommerce = function_exists('WC') ? WC() : $GLOBALS['woocommerce'];
+            $shippingCountries = method_exists($woocommerce->countries, 'get_shipping_countries')
+                                    ? $woocommerce->countries->get_shipping_countries()
+                                    : $woocommerce->countries->countries;
+
 			$this->form_fields = array(
 				'enabled'    => array(
 					'title'   => __( 'Enable/Disable', 'woocommerce' ),
@@ -73,7 +80,7 @@ function init_woowbs() {
                     'class'			=> 'chosen_select',
                     'css'			=> 'width: 450px;',
                     'default' 		=> '',
-                    'options'		=> WC()->countries->get_shipping_countries(),
+                    'options'		=> $shippingCountries,
                     'custom_attributes' => array(
                         'data-placeholder' => __( 'Select some countries', 'woocommerce' )
                     )
