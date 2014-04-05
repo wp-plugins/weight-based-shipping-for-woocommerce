@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: dangoodman
  */
 
@@ -499,14 +499,26 @@ function init_woowbs()
             {
                 $this->profile_instances = array();
 
-                foreach (array_keys(wp_load_alloptions()) as $option)
+                $registered_profile_ids = array();
                 {
-                    $matches = array();
-                    if (preg_match("/^woocommerce_WC_Weight_Based_Shipping_(?<profile>\\w+)_settings$/", $option, $matches))
+                    foreach (array_keys(wp_load_alloptions()) as $option)
                     {
-                        $profile_id = $matches['profile'];
-                        $this->profile_instances[$profile_id] = new WC_Weight_Based_Shipping($profile_id);
+                        $matches = array();
+                        if (preg_match("/^woocommerce_WC_Weight_Based_Shipping_(?<profile>\\w+)_settings$/", $option, $matches))
+                        {
+                            $registered_profile_ids[] = $matches['profile'];
+                        }
                     }
+
+                    if (empty($registered_profile_ids))
+                    {
+                        $registered_profile_ids[] = $this->new_profile_id();
+                    }
+                }
+
+                foreach ($registered_profile_ids as $profile_id)
+                {
+                    $this->profile_instances[$profile_id] = new WC_Weight_Based_Shipping($profile_id);
                 }
             }
 
