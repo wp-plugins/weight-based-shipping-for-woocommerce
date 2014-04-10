@@ -11,7 +11,8 @@ Simple weight based shipping method for WooCommerce
 
 == Description ==
 
-Plugin adds a simple weight based shipping method to WooCommerce. You can have multiple configurations active depending on countries and max weight you need to handle.
+Plugin adds a simple weight based shipping method to WooCommerce. You can have multiple configurations active depending on countries and max weight you need to handle. See Screenshots tab for details.
+
 You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Installation ==
