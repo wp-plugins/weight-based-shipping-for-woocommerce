@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 2.0.2
+ * Version: 2.1.0
  * Author: dangoodman
  */
 
@@ -30,6 +30,7 @@ function init_woowbs()
     {
         public $name;
         public $profile_id;
+        public $min_weight;
         public $max_weight;
         public $rate;
 
@@ -68,7 +69,12 @@ function init_woowbs()
 			$this->tax_status       = $this->get_option('tax_status');
 			$this->fee              = $this->get_option('fee');
             $this->rate             = $this->get_option('rate');
-            $this->max_weight       = $this->get_option('max_weight');
+
+            $this->min_weight = $this->validate_min_weight($this->get_option('min_weight'));
+            $this->settings['min_weight'] = $this->format_float($this->min_weight);
+
+            $this->max_weight = $this->validate_max_weight($this->get_option('max_weight'), $this->min_weight);
+            $this->settings['max_weight'] = $this->format_float($this->max_weight, '');
 
             if (empty($this->countries)) {
                 $this->availability = $this->settings['availability'] = 'all';
@@ -147,15 +153,22 @@ function init_woowbs()
 					'description' => __( "Set your shipping price for 1 {$weight_unit}. Example: <code>1.95</code>.", 'woocommerce' ),
 					'default'     => '',
 				),
+                'min_weight' => array
+                (
+                    'title'       => __('Min Weight', 'woocommerce'),
+                    'type'        => 'decimal',
+                    'description' =>
+                        "The shipping option will not be shown during the checkout process
+                        if order weight less than this value. Example: <code>0.5</code>({$weight_unit}).",
+                ),
                 'max_weight' => array
                 (
                     'title'       => __( 'Max Weight', 'woocommerce' ),
                     'type'        => 'decimal',
-                    'description' => __(
+                    'description' =>
                         "The shipping option will not be shown during the checkout process
                         if order weight exceeds this limit. Example: <code>2.5</code>({$weight_unit}).
-                        Leave blank to disable."
-                    ),
+                        Leave blank to disable.",
                 ),
 			);
 		}
@@ -164,8 +177,11 @@ function init_woowbs()
         {
 			$weight = WC()->cart->cart_contents_weight;
 
-            $max_weight = (float)@$this->settings['max_weight'];
-            if ($max_weight > 0 && $weight > $max_weight) {
+            if ($this->min_weight && $weight < $this->min_weight) {
+                return;
+            }
+
+            if ($this->max_weight && $weight > $this->max_weight) {
                 return;
             }
 
@@ -245,9 +261,11 @@ function init_woowbs()
                 <input name="save" class="button-primary" type="submit"
                        value="<?php _e( 'Save changes', 'woocommerce' ); ?>" />
 
+            <?php if ($multiple_profiles_available): ?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input class="button" type="submit" name="delete" value="<?=esc_html(__('Delete'))?>"
                        onclick="return confirm('<?=__('Are you sure?')?>');" />
+            <?php endif; ?>
 			<?php
 		}
 
@@ -282,6 +300,43 @@ function init_woowbs()
             }
         }
 
+        public function validate_min_weight_field($key)
+        {
+            return $this->validate_min_weight($this->validate_decimal_field($key));
+        }
+
+        public function validate_max_weight_field($key)
+        {
+            return $this->validate_max_weight($this->validate_decimal_field($key), $this->validate_min_weight_field('min_weight'));
+        }
+
+        private function validate_min_weight($min_weight)
+        {
+            return max(0, (float)$min_weight);
+        }
+
+        private function validate_max_weight($max_weight, $min_weight)
+        {
+            $max_weight = max(0, (float)$max_weight);
+
+            if ($max_weight && $min_weight && $max_weight < $min_weight)
+            {
+                $max_weight = $min_weight;
+            }
+
+            return $max_weight;
+        }
+
+        private function format_float($value, $zero_replacement = 0)
+        {
+            if ($value == 0)
+            {
+                return $zero_replacement;
+            }
+
+            return wc_float_to_string($value);
+        }
+
         private static function admin_options_page_url($profile_id = null)
         {
             $query = build_query(array_filter(array
@@ -308,7 +363,8 @@ function init_woowbs()
                         <tr>
                             <th class="name"><?php _e('Name', 'woocommerce'); ?></th>
                             <th><?php _e('Countries', 'woocommerce'); ?></th>
-                            <th><?php _e('Max Weight', 'woocommerce'); ?></th>
+                            <th><?php _e('Weight', 'woocommerce'); ?></th>
+                            <th><?php _e('Handling Fee', 'woocommerce'); ?></th>
                             <th><?php _e('Shipping Rate', 'woocommerce'); ?></th>
                             <th class="status"><?php _e('Status', 'woocommerce'); ?></th>
                         </tr>
@@ -333,7 +389,11 @@ function init_woowbs()
                             </td>
 
                             <td>
-                                <?= esc_html(!empty($profile->max_weight) ? $profile->max_weight : '-') ?>
+                                <?= $this->format_float($profile->min_weight) . ' — ' . $this->format_float($profile->max_weight, '&infin;') ?>
+                            </td>
+
+                            <td>
+                                <?= esc_html($this->format_float($profile->fee, '-')); ?>
                             </td>
 
                             <td>
@@ -476,11 +536,11 @@ function init_woowbs()
 
         public function new_profile_id()
         {
-            $new_profile_id_int = 0;
+            $timestamp = time();
 
+            $i = null;
             do {
-                $new_profile_id_int++;
-                $new_profile_id = str_pad($new_profile_id_int, 5, '0', STR_PAD_LEFT);
+                $new_profile_id = trim($timestamp.'-'.$i++, '-');
             } while ($this->profile_exists($new_profile_id));
 
             return $new_profile_id;
