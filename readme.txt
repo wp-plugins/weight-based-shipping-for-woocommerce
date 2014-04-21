@@ -15,6 +15,22 @@ Plugin adds a simple weight based shipping method to WooCommerce. You can have m
 
 You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
+== Changelog ===
+
+= 2.2.1 =
+
+Allow zero weight shipping. Thus only Handling Fee is added to the final price.
+
+Previously, weight based shipping option has not been shown to user if total weight of their cart is zero. Since version 2.2.1 this is changed so shipping option is available to user with price set to Handling Fee. If it does not suite your needs well you can return previous behavior by setting Min Weight to something a bit greater zero, e.g. 0.001, so that zero-weight orders will not match constraints and the shipping option will not be shown.
+
+== Upgrade Notice ==
+
+= 2.2.1 =
+
+Allow zero weight shipping. Thus only Handling Fee is added to the final price.
+
+Previously, weight based shipping option has not been shown to user if total weight of their cart is zero. Since version 2.2.1 this is changed so shipping option is available to user with price set to Handling Fee. If it does not suite your needs well you can return previous behavior by setting Min Weight to something a bit greater zero, e.g. 0.001, so that zero-weight orders will not match constraints and the shipping option will not be shown.
+
 == Installation ==
 
 1. Upload `woocommerce-weight-based-shipping` folder  to the `/wp-content/plugins/` directory

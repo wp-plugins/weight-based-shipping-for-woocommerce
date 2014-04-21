@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 2.1.1
+ * Version: 2.2.1
  * Author: dangoodman
  */
 
@@ -68,6 +68,7 @@ function init_woowbs()
 			$this->type             = 'order';
 			$this->tax_status       = $this->get_option('tax_status');
 			$this->fee              = $this->get_option('fee');
+
             $this->rate             = $this->get_option('rate');
 
             $this->min_weight = $this->validate_min_weight($this->get_option('min_weight'));
@@ -104,34 +105,40 @@ function init_woowbs()
                     'title'  => __('Profile Name', 'woocommerce'),
                     'type'   => 'text',
                 ),
-				'title'      => array(
+				'title'      => array
+                (
 					'title'       => __( 'Method Title', 'woocommerce' ),
 					'type'        => 'text',
 					'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce' ),
 					'default'     => __( 'Weight Based Shipping', 'woocommerce' ),
 				),
-                'availability' => array(
+                'availability' => array
+                (
                     'title' 		=> __( 'Availability', 'woocommerce' ),
                     'type' 			=> 'select',
                     'default' 		=> 'all',
                     'class'			=> 'availability',
-                    'options'		=> array(
+                    'options'		=> array
+                    (
                         'all' 		=> __( 'All allowed countries', 'woocommerce' ),
                         'specific' 	=> __( 'Specific Countries', 'woocommerce' ),
                     ),
                 ),
-                'countries' => array(
+                'countries' => array
+                (
                     'title' 		=> __( 'Specific Countries', 'woocommerce' ),
                     'type' 			=> 'multiselect',
                     'class'			=> 'chosen_select',
                     'css'			=> 'width: 450px;',
                     'default' 		=> '',
                     'options'		=> $shipping_countries,
-                    'custom_attributes' => array(
+                    'custom_attributes' => array
+                    (
                         'data-placeholder' => __( 'Select some countries', 'woocommerce' )
                     )
                 ),
-				'tax_status' => array(
+				'tax_status' => array
+                (
 					'title'       => __( 'Tax Status', 'woocommerce' ),
 					'type'        => 'select',
 					'description' => '',
@@ -141,13 +148,15 @@ function init_woowbs()
 						'none'    => __( 'None', 'woocommerce' ),
 					),
 				),
-				'fee'        => array(
-					'title'       => __( 'Handling Fee', 'woocommerce' ),
+				'fee'        => array
+                (
+					'title'       => __( 'Handling Fee', 'woocommerce'),
 					'type'        => 'text',
 					'description' => __( 'Fee excluding tax, e.g. 3.50. Leave blank to disable.', 'woocommerce' ),
 					'default'     => '',
 				),
-				'rate'       => array(
+				'rate'       => array
+                (
 					'title'       => __( 'Shipping Rate', 'woocommerce' ),
 					'type'        => 'price',
 					'description' => __( "Set your shipping price for 1 {$weight_unit}. Example: <code>1.95</code>.", 'woocommerce' ),
@@ -163,7 +172,7 @@ function init_woowbs()
                 ),
                 'max_weight' => array
                 (
-                    'title'       => __( 'Max Weight', 'woocommerce' ),
+                    'title'       => __('Max Weight', 'woocommerce'),
                     'type'        => 'decimal',
                     'description' =>
                         "The shipping option will not be shown during the checkout process
@@ -176,19 +185,17 @@ function init_woowbs()
 		public function calculate_shipping($package = array())
         {
 			$weight = WC()->cart->cart_contents_weight;
-
             if ($this->min_weight && $weight < $this->min_weight) {
                 return;
             }
-
             if ($this->max_weight && $weight > $this->max_weight) {
                 return;
             }
 
-			$rate   = (float)@$this->settings['rate'];
-			$price  = $weight * $rate;
+			$rate = (float)@$this->settings['rate'];
+			$price = $weight * $rate;
 
-			if ($price <= 0) {
+			if ($price < 0) {
 				return;
 			}
 
@@ -208,6 +215,12 @@ function init_woowbs()
 
 		public function admin_options()
         {
+            if (!empty($_GET['hide_221_upgrade_notice']))
+            {
+                delete_option('woowbs_show_221_upgrade_notice');
+                echo '<script>location.href = '.json_encode(self::admin_options_page_url(null)).';</script>';
+            }
+
             $manager = WBS_Profile_Manager::instance();
 
             $profiles = $manager->profiles();
@@ -310,6 +323,21 @@ function init_woowbs()
             return $this->validate_max_weight($this->validate_decimal_field($key), $this->validate_min_weight_field('min_weight'));
         }
 
+        public static function admin_options_page_url($profile_id = null, $parameters = array())
+        {
+            $query = build_query(array_filter($parameters + array
+            (
+                "page"          => (version_compare(WC()->version, '2.1', '>=') ? "wc-settings" : "woocommerce_settings"),
+                "tab"           => "shipping",
+                "section"       => __CLASS__,
+                'wbs_profile'   => $profile_id,
+            )));
+
+            $url = admin_url("admin.php?{$query}");
+
+            return $url;
+        }
+
         private function validate_min_weight($min_weight)
         {
             return max(0, (float)$min_weight);
@@ -335,21 +363,6 @@ function init_woowbs()
             }
 
             return wc_float_to_string($value);
-        }
-
-        private static function admin_options_page_url($profile_id = null)
-        {
-            $query = build_query(array_filter(array
-            (
-                "page"          => (version_compare(WC()->version, '2.1', '>=') ? "wc-settings" : "woocommerce_settings"),
-                "tab"           => "shipping",
-                "section"       => __CLASS__,
-                'wbs_profile'   => $profile_id,
-            )));
-
-            $url = admin_url("admin.php?{$query}");
-
-            return $url;
         }
 
         /**
@@ -591,6 +604,74 @@ function init_woowbs()
 
     // Setup weight based shipping profiles
     WBS_Profile_Manager::instance();
-}
 
+    if (get_option('woowbs_show_221_upgrade_notice'))
+    {
+        add_action('admin_notices', function()
+        {
+            $setting_page_url = esc_html(WC_Weight_Based_Shipping::admin_options_page_url());
+            $hide_notice_url = esc_html(WC_Weight_Based_Shipping::admin_options_page_url(null, array('hide_221_upgrade_notice' => 'yes')));
+
+            echo '
+            <div class="highlight" style="padding: 1em; border: 1px solid red;">
+                <big>
+                    Behavior of "Weight based shipping for WooCommerce" plugin changed in the new version.
+                    <a id="woowbs-221-upgrade-notice-collapse" href="#">Less</a>
+                </big>
+                <div id="woowbs-221-upgrade-notice-collapse-content">
+                    <p>Previously, weight based shipping option has not been shown to user if total weight of their cart is zero.
+                    Since version 2.2.1 this is changed so shipping option is available to user with price set to Handling Fee.
+                    If it does not suite your needs well you can return previous behavior by setting Min Weight to something
+                    a bit greater zero, e.g. 0.001, so that zero-weight orders will not match constraints and the shipping
+                    option will not be shown.</p>
+                    <p>Please <a href="'.$setting_page_url.'">review settings</a>
+                    and make appropriate changes if it\'s needed.</p>
+                    <p><a class="button" href="'.$hide_notice_url.'">Don\'t show this message again</a></p>
+                </div>
+            </div>
+            <script>
+                (function($) {
+                    var $collapser = $("#woowbs-221-upgrade-notice-collapse");
+                    var $content = $("#woowbs-221-upgrade-notice-collapse-content");
+                    var toggleSpeed = 0;
+
+                    $collapser.click(function()
+                    {
+                        $content.toggle(toggleSpeed, function() {
+                            $collapser.text($content.is(":visible") ? "Less" : "More");
+                        });
+
+                        return false;
+                    });
+
+                    $collapser.click();
+                    toggleSpeed = "fast";
+                })(jQuery);
+            </script>';
+        });
+    }
+
+    add_action('admin_init', 'woowbs_update');
+
+    function woowbs_update()
+    {
+        $previous_version = get_option('woowbs_version');
+        if (empty($previous_version)) {
+            $previous_version = '2.1.1';
+        }
+
+        $current_version = get_plugin_data(__FILE__, false, false);
+        $current_version = $current_version['Version'];
+
+        if ($previous_version !== $current_version)
+        {
+            if (version_compare($previous_version, '2.2.1') < 0)
+            {
+                update_option('woowbs_show_221_upgrade_notice', true);
+            }
+
+            update_option('woowbs_version', $current_version);
+        }
+    }
+}
 ?>
