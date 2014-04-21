@@ -17,6 +17,10 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.2.2 =
+
+Fix "parse error: syntax error, unexpected T_FUNCTION in woocommerce-weight-based-shipping.php on line 610" http://wordpress.org/support/topic/fatal-error-1164.
+
 = 2.2.1 =
 
 Allow zero weight shipping. Thus only Handling Fee is added to the final price.

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 2.2.1
+ * Version: 2.2.2
  * Author: dangoodman
  */
 
@@ -607,7 +607,9 @@ function init_woowbs()
 
     if (get_option('woowbs_show_221_upgrade_notice'))
     {
-        add_action('admin_notices', function()
+        add_action('admin_notices', 'woowbs_admin_notices');
+
+        function woowbs_admin_notices()
         {
             $setting_page_url = esc_html(WC_Weight_Based_Shipping::admin_options_page_url());
             $hide_notice_url = esc_html(WC_Weight_Based_Shipping::admin_options_page_url(null, array('hide_221_upgrade_notice' => 'yes')));
@@ -648,7 +650,7 @@ function init_woowbs()
                     toggleSpeed = "fast";
                 })(jQuery);
             </script>';
-        });
+        };
     }
 
     add_action('admin_init', 'woowbs_update');
