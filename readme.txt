@@ -17,6 +17,11 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.2.3 =
+
+* Fixed: first time saving settings with fresh install does not save anything while reporting successful saving.
+* Replace short php tags with their full equivalents to make code more portable.
+
 = 2.2.2 =
 
 Fix "parse error: syntax error, unexpected T_FUNCTION in woocommerce-weight-based-shipping.php on line 610" http://wordpress.org/support/topic/fatal-error-1164.

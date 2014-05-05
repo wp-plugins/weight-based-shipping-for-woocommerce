@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Weight based shipping for Woocommerce
  * Description: Simple weight based shipping method for Woocommerce.
- * Version: 2.2.2
+ * Version: 2.2.3
  * Author: dangoodman
  */
 
@@ -243,14 +243,14 @@ function init_woowbs()
 				<p><?php _e('Lets you calculate shipping based on total weight of the cart. You can have multiple configurations active.', 'woocommerce'); ?></p>
 
             <?php if (!$multiple_profiles_available): ?>
-                <?=$create_profile_link?><br><br><br>
+                <?php echo $create_profile_link ?><br><br><br>
             <?php endif; ?>
 
 				<table class="form-table">
             <?php if ($multiple_profiles_available): ?>
                     <tr class="wbs-title">
                         <th colspan="2">
-                            <h4>Available configurations <?=$create_profile_link?></h4>
+                            <h4>Available configurations <?php echo $create_profile_link ?></h4>
                         </th>
                     </tr>
 
@@ -263,7 +263,7 @@ function init_woowbs()
                     <tr class="wbs-title">
                         <th colspan="2">
                             <h4>
-                                Settings for <?=esc_html($profile->name)?> configuration
+                                Settings for <?php echo esc_html($profile->name) ?> configuration
                             </h4>
                         </th>
                     </tr>
@@ -276,8 +276,8 @@ function init_woowbs()
 
             <?php if ($multiple_profiles_available): ?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input class="button" type="submit" name="delete" value="<?=esc_html(__('Delete'))?>"
-                       onclick="return confirm('<?=__('Are you sure?')?>');" />
+                <input class="button" type="submit" name="delete" value="<?php echo esc_html(__('Delete'))?>"
+                       onclick="return confirm('<?php echo __('Are you sure?') ?>');" />
             <?php endif; ?>
 			<?php
 		}
@@ -388,34 +388,34 @@ function init_woowbs()
             foreach ($profiles as $profile):
                 ?>
                         <tr
-                            <?=($profile->profile_id === $current_profile_id ? 'class="wbs-current"' : null)?>
-                            data-settings-url="<?=esc_html($profile->admin_options_page_url($profile->profile_id))?>"
+                            <?php echo ($profile->profile_id === $current_profile_id ? 'class="wbs-current"' : null)?>
+                            data-settings-url="<?php echo esc_html($profile->admin_options_page_url($profile->profile_id))?>"
                         >
-                            <td class="name"><?=esc_html($profile->name)?></td>
+                            <td class="name"><?php echo esc_html($profile->name)?></td>
 
                             <td>
                 <?php if ($profile->availability === 'all'): ?>
-                                <?=__('All allowed countries', 'woocommerce')?>
+                                <?php echo __('All allowed countries', 'woocommerce')?>
                 <?php else: ?>
-                                <?=esc_html(join(', ', $profile->countries))?>
+                                <?php echo esc_html(join(', ', $profile->countries))?>
                 <?php endif; ?>
                             </td>
 
                             <td>
-                                <?= $this->format_float($profile->min_weight) . ' — ' . $this->format_float($profile->max_weight, '&infin;') ?>
+                                <?php echo $this->format_float($profile->min_weight) . ' — ' . $this->format_float($profile->max_weight, '&infin;') ?>
                             </td>
 
                             <td>
-                                <?= esc_html($this->format_float($profile->fee, '-')); ?>
+                                <?php echo esc_html($this->format_float($profile->fee, '-')); ?>
                             </td>
 
                             <td>
-                                <?= esc_html($profile->rate); ?>
+                                <?php echo esc_html($profile->rate); ?>
                             </td>
 
                             <td class="status">
                 <?php if ($profile->enabled == 'yes'): ?>
-                                <span class="status-enabled tips" data-tip="<?=__('Enabled', 'woocommerce')?>"><?=__('Enabled', 'woocommerce')?></span>
+                                <span class="status-enabled tips" data-tip="<?php echo __('Enabled', 'woocommerce')?>"><?php echo __('Enabled', 'woocommerce')?></span>
                 <?php else: ?>
                                 -
                 <?php endif; ?>
@@ -549,6 +549,10 @@ function init_woowbs()
 
         public function new_profile_id()
         {
+            if (!$this->profile_exists('main')) {
+                return 'main';
+            }
+
             $timestamp = time();
 
             $i = null;
