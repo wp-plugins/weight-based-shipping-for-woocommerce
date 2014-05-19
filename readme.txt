@@ -17,6 +17,15 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.3.0 =
+
+* Duplicate profile feature
+* New 'Weight Step' option for rough gradual shipping price calculation
+* Added more detailed description to the Handling Fee and Shipping Rate fields to make their purpose clear
+* Added Russian translation
+* Plugin prepared for localization
+* Refactoring
+
 = 2.2.3 =
 
 * Fixed: first time saving settings with fresh install does not save anything while reporting successful saving.
