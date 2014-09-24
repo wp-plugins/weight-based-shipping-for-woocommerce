@@ -45,11 +45,19 @@
             $current_version = get_plugin_data($this->pluginFile, false, false);
             $current_version = $current_version['Version'];
 
-            if ($previous_version !== $current_version)
-            {
-                if (version_compare($previous_version, '2.2.1') < 0)
-                {
+            if ($previous_version !== $current_version) {
+                if (version_compare($previous_version, '2.2.1') < 0) {
                     update_option('woowbs_show_221_upgrade_notice', true);
+                }
+
+                if (version_compare($previous_version, '2.4.0') < 0) {
+                    $existing_profiles = WBS_Profile_Manager::instance()->profiles();
+                    foreach ($existing_profiles as $profile) {
+                        $option = $profile->get_wp_option_name();
+                        $config = get_option($option);
+                        $config['extra_weight_only'] = 'no';
+                        update_option($option, $config);
+                    }
                 }
 
                 update_option('woowbs_version', $current_version);

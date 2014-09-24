@@ -29,6 +29,7 @@
             return self::$instance;
         }
 
+        /** @return WC_Weight_Based_Shipping[] */
         public function profiles()
         {
             if (!isset($this->ordered_profiles))

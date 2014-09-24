@@ -4,6 +4,7 @@
         public $name;
         public $profile_id;
         public $rate;
+        public $extra_weight_only;
         public $weight_step;
         public $min_weight;
         public $max_weight;
@@ -44,6 +45,8 @@
 
             $this->rate = $this->get_option('rate');
             $this->settings['rate'] = $this->format_float($this->rate, '');
+
+            $this->extra_weight_only = $this->get_option('extra_weight_only');
 
             $this->weight_step = $this->validate_positive_float($this->get_option('weight_step'));
             $this->settings['weight_step'] = $this->format_float($this->weight_step, '');
@@ -139,6 +142,14 @@
                         __('Set your shipping price for 1 {{weight_unit}}. Example: <code>1.95</code>({{currency}}/{{weight_unit}}).', 'woowbs').'<br />'.
                         __('Dynamic part of shipping price. Leave it empty or zero if your shipping price does not depend on order weight.', 'woowbs'),
                  ),
+                'extra_weight_only' => array
+                (
+                    'title'         => __('Extra Weight Only', 'woowbs'),
+                    'label'         => __('Rate weight after Min Weight', 'woowbs'),
+                    'type'          => 'checkbox',
+                    'default'       => 'yes',
+                    'description'   => __('Apply Shipping Rate to the weight part exceeding Min Weight if checked. Otherwize, apply Shipping Rate to the whole cart weight.', 'woowbs'),
+                ),
                 'weight_step' => array
                 (
                     'title'         => __('Weight Step', 'woowbs'),
@@ -185,6 +196,10 @@
                 return;
             }
 
+            if ($this->extra_weight_only !== 'no' && $this->min_weight) {
+                $weight = max(0, $weight - $this->min_weight);
+            }
+
             if ($this->weight_step) {
                 $weight = ceil($weight / $this->weight_step) * $this->weight_step;
             }
@@ -222,7 +237,7 @@
             {
                 if (isset($profile))
                 {
-                    delete_option($profile->plugin_id.$profile->id.'_settings');
+                    delete_option($this->get_wp_option_name($profile));
                 }
 
                 $this->refresh();
@@ -325,6 +340,11 @@
         public function generate_positive_decimal_html($key, $data)
         {
             return $this->generate_decimal_html($key, $data);
+        }
+
+        public function get_wp_option_name()
+        {
+            return sprintf('%s%s_settings', $this->plugin_id, $this->id);
         }
 
         public static function edit_profile_url($profile_id = null, $parameters = array())

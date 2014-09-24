@@ -18,6 +18,10 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.4.0 =
+
+* By default, apply Shipping Rate to the extra weight part exceeding Min Weight. Also a checkbox added to switch off this feature.
+
 = 2.3.0 =
 
 * Duplicate profile feature
