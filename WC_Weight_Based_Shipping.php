@@ -273,6 +273,8 @@
                 <h3><?php esc_html_e('Weight based shipping', 'woowbs'); ?></h3>
                 <p><?php esc_html_e('Lets you calculate shipping based on total weight of the cart. You can have multiple configurations active.', 'woowbs'); ?></p>
 
+                <?php include(dirname(__FILE__).'/cta-buttons.php') ?>
+
             <?php if (!$multiple_profiles_available): ?>
                 <?php echo $create_profile_link_html ?><br><br><br>
             <?php endif; ?>
@@ -469,9 +471,9 @@
                 <?php endif; ?>
                         </td>
 
-                        <td>
+                        <td class="actions">
                             <a class="button" href="<?php echo esc_html($profile->duplicate_profile_url($profile->profile_id)) ?>">
-                                <?php esc_html_e('Duplicate') ?>
+                                <?php esc_html_e('Duplicate', 'woowbs') ?>
                             </a>
 
                             <a class="button" href="<?php echo esc_html($profile->delete_profile_url($profile->profile_id)) ?>"
@@ -493,6 +495,7 @@
             </script>
             <style>
                 #woowbs_shipping_methods td { cursor: pointer; }
+                #woowbs_shipping_methods td.actions { white-space: nowrap; }
                 #woowbs_shipping_methods tr.wbs-current { background-color: #eee; }
                 #woowbs_shipping_methods tr:hover { background-color: #ddd; }
                 tr.wbs-title th { padding: 2em 0 0 0; }

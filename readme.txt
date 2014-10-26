@@ -18,6 +18,13 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.4.1 =
+
+* Updated pot-file required for translations
+* Updated Russian translation
+* Added three nice buttons to plugin settings page
+* Prevent buttons in Actions column from wrapping on multiple lines
+
 = 2.4.0 =
 
 * By default, apply Shipping Rate to the extra weight part exceeding Min Weight. Also a checkbox added to switch off this feature.

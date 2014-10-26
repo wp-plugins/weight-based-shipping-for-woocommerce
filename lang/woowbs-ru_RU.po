@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Weight based shipping for Woocommerce\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/weight-based-"
 "shipping-for-woocommerce\n"
-"POT-Creation-Date: 2014-05-19 12:24:39+00:00\n"
-"PO-Revision-Date: 2014-05-19 16:25+0400\n"
+"POT-Creation-Date: 2014-10-22 14:32:22+00:00\n"
+"PO-Revision-Date: 2014-10-22 18:32+0300\n"
 "Last-Translator: dangoodman <gravyzzap@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -15,26 +15,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: WC_Weight_Based_Shipping.php:19
+#: WC_Weight_Based_Shipping.php:20
 msgid "Weight Based"
 msgstr "По весу"
 
-#: WC_Weight_Based_Shipping.php:80
+#: WC_Weight_Based_Shipping.php:83
 msgid "Profile Name"
 msgstr "Название профиля"
 
-#: WC_Weight_Based_Shipping.php:88
+#: WC_Weight_Based_Shipping.php:91
 msgid "Weight Based Shipping"
 msgstr "Доставка по весу"
 
-#: WC_Weight_Based_Shipping.php:131
+#: WC_Weight_Based_Shipping.php:134
 msgid "Fee excluding tax, e.g. <code>3.50</code>({{currency}})."
 msgstr "Взнос без налога, например, <code>3.50</code>({{currency}})."
 
-#: WC_Weight_Based_Shipping.php:132
+#: WC_Weight_Based_Shipping.php:135
 msgid ""
 "Constant part of shipping price. Leave it empty or zero if your shipping "
 "price depends only on order weight."
@@ -42,11 +42,11 @@ msgstr ""
 "Фиксированная составляющая стоимости доставки. Если ноль — стоимость "
 "доставки будет зависеть только от веса заказа."
 
-#: WC_Weight_Based_Shipping.php:136 WC_Weight_Based_Shipping.php:406
+#: WC_Weight_Based_Shipping.php:139 WC_Weight_Based_Shipping.php:426
 msgid "Shipping Rate"
 msgstr "Тариф"
 
-#: WC_Weight_Based_Shipping.php:139
+#: WC_Weight_Based_Shipping.php:142
 msgid ""
 "Set your shipping price for 1 {{weight_unit}}. Example: <code>1.95</"
 "code>({{currency}}/{{weight_unit}})."
@@ -54,7 +54,7 @@ msgstr ""
 "Стоимость доставки за 1 {{weight_unit}}. Пример: <code>1.95</"
 "code>({{currency}}/{{weight_unit}})."
 
-#: WC_Weight_Based_Shipping.php:140
+#: WC_Weight_Based_Shipping.php:143
 msgid ""
 "Dynamic part of shipping price. Leave it empty or zero if your shipping "
 "price does not depend on order weight."
@@ -62,11 +62,28 @@ msgstr ""
 "Плавающая составляющая стоимости доставки. Если ноль — стоимость доставки не "
 "будет зависеть от веса заказа."
 
-#: WC_Weight_Based_Shipping.php:144 WC_Weight_Based_Shipping.php:407
+#: WC_Weight_Based_Shipping.php:147
+msgid "Extra Weight Only"
+msgstr "Только дополнительный вес"
+
+#: WC_Weight_Based_Shipping.php:148
+msgid "Rate weight after Min Weight"
+msgstr "Тарифицировать только вес свыше минимального"
+
+#: WC_Weight_Based_Shipping.php:151
+msgid ""
+"Apply Shipping Rate to the weight part exceeding Min Weight if checked. "
+"Otherwize, apply Shipping Rate to the whole cart weight."
+msgstr ""
+"Если включено тарифицироваться будет только та часть веса корзины, которая "
+"превышает значение Минимального веса. Иначе Тариф применяется ко всему весу "
+"корзины."
+
+#: WC_Weight_Based_Shipping.php:155 WC_Weight_Based_Shipping.php:427
 msgid "Weight Step"
 msgstr "Шаг веса"
 
-#: WC_Weight_Based_Shipping.php:147
+#: WC_Weight_Based_Shipping.php:158
 msgid ""
 "Use this option if you need to rate every next weight chunk (e.g. every "
 "<code>0.5</code>{{weight_unit}}) rather than calculate price using precise "
@@ -76,7 +93,7 @@ msgstr ""
 "примеру, каждые <code>0.5</code>{{weight_unit}}), вместо тарификации по "
 "точном весу."
 
-#: WC_Weight_Based_Shipping.php:148
+#: WC_Weight_Based_Shipping.php:159
 msgid ""
 "For example if total order weight is 1.325{{weight_unit}} and Shipping Rate "
 "is {{currency}}2 per {{weight_unit}} then total shipping price would be "
@@ -92,11 +109,11 @@ msgstr ""
 "то стоимость доставки составит 3{{currency}}; если 0.1{{weight_unit}} — "
 "2.8{{currency}}; если 1{{weight_unit}} — 4{{currency}}; и т.д."
 
-#: WC_Weight_Based_Shipping.php:152
+#: WC_Weight_Based_Shipping.php:163
 msgid "Min Weight"
-msgstr "Мин. вес"
+msgstr "Минимальный вес"
 
-#: WC_Weight_Based_Shipping.php:155
+#: WC_Weight_Based_Shipping.php:166
 msgid ""
 "The shipping option will not be shown during the checkout process if order "
 "weight less than this value. Example: <code>0.5</code>({{weight_unit}})."
@@ -105,11 +122,11 @@ msgstr ""
 "заказа если общий вес заказа меньше чем указанное значение. Пример: "
 "<code>0.5</code>({{weight_unit}})."
 
-#: WC_Weight_Based_Shipping.php:159
+#: WC_Weight_Based_Shipping.php:170
 msgid "Max Weight"
-msgstr "Макс. вес"
+msgstr "Максимальный вес"
 
-#: WC_Weight_Based_Shipping.php:162
+#: WC_Weight_Based_Shipping.php:173
 msgid ""
 "The shipping option will not be shown during the checkout process if order "
 "weight exceeds this limit. Example: <code>2.5</code>({{weight_unit}}). Leave "
@@ -120,20 +137,20 @@ msgstr ""
 "<code>2.5</code>({{weight_unit}}). Оставьте пустым если ограничение по "
 "максимальному весу не требуется."
 
-#: WC_Weight_Based_Shipping.php:241
+#: WC_Weight_Based_Shipping.php:256
 msgctxt "noun"
 msgid "copy"
 msgstr "копия"
 
-#: WC_Weight_Based_Shipping.php:254
+#: WC_Weight_Based_Shipping.php:269
 msgid "Create additional configuration"
 msgstr "Добавить ещё один профиль"
 
-#: WC_Weight_Based_Shipping.php:258
+#: WC_Weight_Based_Shipping.php:273
 msgid "Weight based shipping"
 msgstr "Доставка по весу"
 
-#: WC_Weight_Based_Shipping.php:259
+#: WC_Weight_Based_Shipping.php:274
 msgid ""
 "Lets you calculate shipping based on total weight of the cart. You can have "
 "multiple configurations active."
@@ -141,13 +158,17 @@ msgstr ""
 "Стоимость доставки рассчитывается в зависимости от общего веса корзины. "
 "Можно создавать несколько активных профилей."
 
-#: WC_Weight_Based_Shipping.php:269
+#: WC_Weight_Based_Shipping.php:284
 msgid "Available configurations"
 msgstr "Доступные профили"
 
-#: WC_Weight_Based_Shipping.php:282
+#: WC_Weight_Based_Shipping.php:297
 msgid "Settings for {{profile_name}} configuration"
 msgstr "Настройки профиля {{profile_name}}"
+
+#: WC_Weight_Based_Shipping.php:474
+msgid "Duplicate"
+msgstr "Дублировать"
 
 #. Description of the plugin/theme
 msgid "Simple weight based shipping method for Woocommerce."
