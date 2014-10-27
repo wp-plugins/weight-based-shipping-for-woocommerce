@@ -18,6 +18,10 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.4.2 =
+
+* Fixed: deleting non-currently selected configuration deletes first configuration from the list
+
 = 2.4.1 =
 
 * Updated pot-file required for translations

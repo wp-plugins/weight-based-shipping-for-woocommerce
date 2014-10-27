@@ -237,7 +237,7 @@
             {
                 if (isset($profile))
                 {
-                    delete_option($this->get_wp_option_name($profile));
+                    delete_option($profile->get_wp_option_name());
                 }
 
                 $this->refresh();

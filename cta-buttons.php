@@ -1,4 +1,9 @@
 <style>
+    .wbs-cta-buttons {
+        clear: both;
+        margin: 1em 0;
+    }
+
     .wbs-cta-button {
         font-family: "Helvetica Neue", helvetica, sans-serif;
         background: #fff;
@@ -152,35 +157,37 @@
     }
 </style>
 
-<a
-    class="wbs-cta-button wbs-cta-button--blue"
-    href="mailto:gravyzzap@gmail.com?subject=<?php echo esc_attr(urlencode("WBS customization: ?")) ?>"
-    target="_blank"
-    title="Need a modification? Drop us a line!"
->
-    <span class="wbs-cta-button__icon wbs-cta-button__icon--adjust"></span>
-    Customize
-    <em class="wbs-cta-button__sub">Need a modification? Drop us a line!</em>
-</a>
+<div class="wbs-cta-buttons">
+    <a
+        class="wbs-cta-button wbs-cta-button--blue"
+        href="mailto:gravyzzap@gmail.com?subject=<?php echo esc_attr(urlencode("WBS customization: ?")) ?>"
+        target="_blank"
+        title="Need a modification? Drop us a line!"
+    >
+        <span class="wbs-cta-button__icon wbs-cta-button__icon--adjust"></span>
+        Customize
+        <em class="wbs-cta-button__sub">Need a modification? Drop us a line!</em>
+    </a>
 
-<a
-    class="wbs-cta-button wbs-cta-button--orange"
-    href="https://wordpress.org/support/plugin/weight-based-shipping-for-woocommerce"
-    target="_blank"
-    title="Have a question? Welcome to support forum!"
->
-    <span class="wbs-cta-button__icon wbs-cta-button__icon--question"></span>
-    Get Support
-    <em class="wbs-cta-button__sub">Have a question? Welcome to support forum!</em>
-</a>
+    <a
+        class="wbs-cta-button wbs-cta-button--orange"
+        href="https://wordpress.org/support/plugin/weight-based-shipping-for-woocommerce"
+        target="_blank"
+        title="Have a question? Welcome to support forum!"
+    >
+        <span class="wbs-cta-button__icon wbs-cta-button__icon--question"></span>
+        Get Support
+        <em class="wbs-cta-button__sub">Have a question? Welcome to support forum!</em>
+    </a>
 
-<a
-    class="wbs-cta-button wbs-cta-button--green"
-    href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=gravyzzap%40gmail.com"
-    target="_blank"
-    title="Like this plugin? Say thanks to us!"
->
-    <span class="wbs-cta-button__icon wbs-cta-button__icon--gift"></span>
-    Donate
-    <em class="wbs-cta-button__sub">Like this plugin? Say thanks to us!</em>
-</a>
+    <a
+        class="wbs-cta-button wbs-cta-button--green"
+        href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=gravyzzap%40gmail.com"
+        target="_blank"
+        title="Like this plugin? Say thanks to us!"
+    >
+        <span class="wbs-cta-button__icon wbs-cta-button__icon--gift"></span>
+        Donate
+        <em class="wbs-cta-button__sub">Like this plugin? Say thanks to us!</em>
+    </a>
+</div>

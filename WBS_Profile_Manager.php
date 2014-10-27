@@ -77,8 +77,6 @@
 
             $id_base = 'WC_Weight_Based_Shipping';
 
-            $id = "{$id_base}_{$profile_id}";
-
             // Upgrade previous version data
             $prev_option_name = "woocommerce_{$id_base}_settings";
             if (($data = get_option($prev_option_name)) !== false)
@@ -86,6 +84,8 @@
                 update_option("woocommerce_{$id_base}_main_settings", $data);
                 delete_option($prev_option_name);
             }
+
+            $id = "{$id_base}_{$profile_id}";
 
             return $id;
         }
