@@ -18,6 +18,15 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.5.0 =
+
+* Shipping classes support
+* Ability to choose all countries except specified
+* Select All/None buttons for countries
+* Purge shipping price calculations cache on configuration changes to reflect actual config immediatelly
+* Profiles table look tweaks
+* Other small tweaks
+
 = 2.4.2 =
 
 * Fixed: deleting non-currently selected configuration deletes first configuration from the list
@@ -72,4 +81,5 @@ Previously, weight based shipping option has not been shown to user if total wei
 
 == Screenshots ==
 
-1. Settings page
+1. An example configuration
+2. Another configuration example

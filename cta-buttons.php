@@ -12,7 +12,7 @@
         font-weight: bold;
         color: #fff;
         display: inline-block;
-        width: 300px;
+        width: 310px;
         text-align: left;
         text-shadow: 1px 1px rgba(0, 0, 0, 0.85);
         -webkit-border-radius: 5px;
@@ -144,7 +144,7 @@
         background-position: 0 -70px;
     }
 
-    @media (max-width: 1210px) {
+    @media (max-width: 1240px) {
         .wbs-cta-button {
             width: 155px;
             text-align: center;
@@ -160,7 +160,7 @@
 <div class="wbs-cta-buttons">
     <a
         class="wbs-cta-button wbs-cta-button--blue"
-        href="mailto:gravyzzap@gmail.com?subject=<?php echo esc_attr(urlencode("WBS customization: ?")) ?>"
+        href="mailto:gravyzzap@gmail.com?subject=<?php echo esc_attr(rawurlencode("WBS customization: ?")) ?>"
         target="_blank"
         title="Need a modification? Drop us a line!"
     >
