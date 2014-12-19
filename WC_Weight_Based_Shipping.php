@@ -233,7 +233,9 @@
                     /** @var WC_Product_Simple $product */
                     $product = $item['data'];
 
-                    $override = $this->shipping_class_overrides->findByClass($product->get_shipping_class());
+                    $class = apply_filters('wbs_remap_shipping_class', $product->get_shipping_class(), $item_id, $this);
+
+                    $override = $this->shipping_class_overrides->findByClass($class);
                     if ($override == null) {
                         $override = $default_override;
                     }
