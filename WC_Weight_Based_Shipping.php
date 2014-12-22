@@ -8,6 +8,8 @@
         public $weight_step;
         public $min_weight;
         public $max_weight;
+        public $min_order_price;
+        public $max_order_price;
 
         /** @var WBS_Shipping_Class_Override_Set */
         public $shipping_class_overrides;
@@ -59,8 +61,14 @@
             $this->min_weight = $this->validate_positive_float($this->get_option('min_weight'));
             $this->settings['min_weight'] = $this->format_float($this->min_weight, '');
 
-            $this->max_weight = $this->validate_max_weight($this->get_option('max_weight'), $this->min_weight);
+            $this->max_weight = $this->validate_max_value($this->get_option('max_weight'), $this->min_weight);
             $this->settings['max_weight'] = $this->format_float($this->max_weight, '');
+
+            $this->min_order_price = $this->validate_positive_float($this->get_option('min_order_price'));
+            $this->settings['min_order_price'] = $this->format_float($this->min_order_price, '');
+
+            $this->max_order_price = $this->validate_max_value($this->get_option('max_order_price'), $this->min_order_price);
+            $this->settings['max_order_price'] = $this->format_float($this->max_order_price, '');
 
             if (empty($this->countries))
             {
@@ -178,7 +186,7 @@
                     'title'       => __('Min Weight', 'woowbs'),
                     'type'        => 'positive_decimal',
                     'description' =>
-                        __('The shipping option will not be shown during the checkout process if order weight less than this value. Example: <code>0.5</code>({{weight_unit}}).', 'woowbs'),
+                        __('The shipping option will not be shown during the checkout process if order weight is less than this value. Example: <code>0.5</code>({{weight_unit}}).', 'woowbs'),
                 ),
                 'max_weight' => array
                 (
@@ -186,6 +194,20 @@
                     'type'        => 'positive_decimal',
                     'description' =>
                         __('The shipping option will not be shown during the checkout process if order weight exceeds this limit. Example: <code>2.5</code>({{weight_unit}}). Leave blank to disable.', 'woowbs'),
+                ),
+                'min_order_price' => array
+                (
+                    'title'       => __('Min Order Price', 'woowbs'),
+                    'type'        => 'positive_decimal',
+                    'description' =>
+                        __('The shipping option will not be shown during the checkout process if order price is less than this value. Example: <code>14.95</code>({{currency}}).'),
+                ),
+                'max_order_price' => array
+                (
+                    'title'       => __('Max Order Price', 'woowbs'),
+                    'type'        => 'positive_decimal',
+                    'description' =>
+                        __('The shipping option will not be shown during the checkout process if order price exceeds this limit. Example: <code>150</code>({{currency}}). Leave blank to disable.', 'woowbs'),
                 ),
                 'shipping_class_overrides' => array
                 (
@@ -217,6 +239,16 @@
             }
             if ($this->max_weight && $weight > $this->max_weight) {
                 return;
+            }
+
+            if ($this->min_order_price || $this->max_order_price) {
+                $cart_total = $cart->subtotal_ex_tax;
+                if ($this->min_order_price && $cart_total < $this->min_order_price) {
+                    return;
+                }
+                if ($this->max_order_price && $cart_total > $this->max_order_price) {
+                    return;
+                }
             }
 
             $default_override = new WBS_Shipping_Rate_Override(
@@ -377,7 +409,7 @@
             }
 
             if ($result) {
-                $this->purgeWoocommerceShippingCache();
+                $this->purge_woocommerce_shipping_cache();
             }
 
             return $result;
@@ -398,7 +430,12 @@
 
         public function validate_max_weight_field($key)
         {
-            return $this->validate_max_weight($this->validate_decimal_field($key), $this->validate_positive_decimal_field('min_weight'));
+            return $this->validate_max_value($this->validate_decimal_field($key), $this->validate_positive_decimal_field('min_weight'));
+        }
+
+        public function validate_max_order_price_field($key)
+        {
+            return $this->validate_max_value($this->validate_decimal_field($key), $this->validate_positive_decimal_field('min_order_price'));
         }
 
         public function validate_shipping_class_overrides_field($key)
@@ -583,7 +620,7 @@
             return $url;
         }
 
-        private function purgeWoocommerceShippingCache()
+        private function purge_woocommerce_shipping_cache()
         {
             global $wpdb;
 
@@ -603,16 +640,16 @@
             return max(0, (float)$value);
         }
 
-        private function validate_max_weight($max_weight, $min_weight)
+        private function validate_max_value($max, $min)
         {
-            $max_weight = $this->validate_positive_float($max_weight);
+            $max = $this->validate_positive_float($max);
 
-            if ($max_weight && $min_weight && $max_weight < $min_weight)
+            if ($max && $min && $max < $min)
             {
-                $max_weight = $min_weight;
+                $max = $min;
             }
 
-            return $max_weight;
+            return $max;
         }
 
         private function format_float($value, $zero_replacement = 0)
