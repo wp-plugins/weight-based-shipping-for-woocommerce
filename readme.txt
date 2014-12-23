@@ -1,6 +1,6 @@
 === Weight based shipping for WooCommerce ===
 Contributors: dangoodman
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=gravyzzap%40gmail.com
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=8UNB4AKDG724Q&lc=US
 Tags: woocommerce, shipping, weight, commerce, ecommerce, shop
 Requires at least: 3.8
 Tested up to: 4.1
