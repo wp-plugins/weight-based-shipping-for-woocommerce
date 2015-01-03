@@ -18,8 +18,11 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.6.1 =
+* Introduced "Subtotal With Tax" option
+
 = 2.6.0 =
-* Min/Max Order Price condition support
+* Min/Max Subtotal condition support
 
 = 2.5.1 = 
 * Introduce "wbs_remap_shipping_class" filter to provide 3dparty plugins an ability to alter shipping cost calculation
