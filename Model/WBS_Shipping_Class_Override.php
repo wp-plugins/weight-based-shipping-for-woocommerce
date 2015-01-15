@@ -19,15 +19,6 @@
             return $this->class;
         }
 
-        private function setClass($class)
-        {
-            if (empty($class)) {
-                throw new InvalidArgumentException("Please provide class for shipping class override");
-            }
-
-            $this->class = $class;
-        }
-
         public function getFee()
         {
             return $this->fee;
@@ -43,22 +34,23 @@
             return $this->weightStep;
         }
 
-        private function setFee($fee)
+        private function setClass($class)
         {
-            if (empty($fee)) {
-                $fee = 0;
+            if (empty($class)) {
+                throw new InvalidArgumentException("Please provide class for shipping class override");
             }
 
-            $this->fee = $fee;
+            $this->class = $class;
+        }
+
+        private function setFee($fee)
+        {
+            $this->fee = self::sanitize($fee);
         }
 
         private function setRate($rate)
         {
-            if (empty($rate)) {
-                $rate = 0;
-            }
-
-            $this->rate = $rate;
+            $this->rate = self::sanitize($rate);
         }
 
         private function setWeightStep($weightStep)
@@ -68,6 +60,20 @@
             }
 
             $this->weightStep = $weightStep;
+        }
+
+        private static function sanitize($value, $allowNnull = false, $sanitizer = 'floatval')
+        {
+            if ($value !== null || !$allowNnull) {
+                $value = $sanitizer($value);
+            }
+
+            return $value;
+        }
+
+        private static function ifnull($one, $other)
+        {
+            return $one !== null ? $one : $other;
         }
     }
 ?>

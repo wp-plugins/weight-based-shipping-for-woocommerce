@@ -18,6 +18,9 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.6.2 =
+* Fixed Shipping Classes Overrides: always apply base Handling Fee
+
 = 2.6.1 =
 * Introduced "Subtotal With Tax" option
 

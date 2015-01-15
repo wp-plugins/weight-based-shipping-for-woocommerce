@@ -260,7 +260,7 @@
                 }
             }
 
-            $default_override = new WBS_Shipping_Rate_Override(
+            $defaultOverride = new WBS_Shipping_Rate_Override(
                 'default',
                 $this->fee,
                 $this->rate,
@@ -268,8 +268,7 @@
             );
 
             /** @var WBS_Cart_Item_Bucket[] $buckets */
-            $buckets = array();
-            {
+            $buckets = array(); {
                 foreach ($cart->get_cart() as $item_id => $item) {
                     /** @var WC_Product_Simple $product */
                     $product = $item['data'];
@@ -278,7 +277,7 @@
 
                     $override = $this->shipping_class_overrides->findByClass($class);
                     if ($override == null) {
-                        $override = $default_override;
+                        $override = $defaultOverride;
                     }
 
                     $class = $override->getClass();
@@ -288,23 +287,25 @@
 
                     $buckets[$class]->addWeight((float)$product->get_weight() * $item['quantity']);
                 }
+
+                $defaultClass = $defaultOverride->getClass();
+                if (!isset($buckets[$defaultClass])) {
+                    $buckets[$defaultClass] = new WBS_Cart_Item_Bucket($defaultOverride, 0);
+                }
             }
 
             $price = 0;
             foreach ($buckets as $bucket) {
                 $override = $bucket->getOverride();
 
-                $weight = $bucket->getWeight();
-                {
-                    if ($override == $default_override) {
-                        if ($this->extra_weight_only !== 'no' && $this->min_weight) {
-                            $weight = max(0, $weight - $this->min_weight);
-                        }
+                $weight = $bucket->getWeight(); {
+                    if ($this->extra_weight_only !== 'no' && $this->min_weight) {
+                        $weight = max(0, $weight - $this->min_weight);
                     }
 
-                    $weight_step = $override->getWeightStep();
-                    if ($weight_step) {
-                        $weight = ceil($weight / $weight_step) * $weight_step;
+                    $weightStep = $override->getWeightStep();
+                    if ($weightStep) {
+                        $weight = ceil($weight / $weightStep) * $weightStep;
                     }
                 }
 
@@ -455,9 +456,9 @@
 
             foreach ((array)@$_POST["{$prefix}_class"] as $i => $class)
             {
-                $fee = $_POST["{$prefix}_fee"][$i];
-                $rate = $_POST["{$prefix}_rate"][$i];
-                $weight_step = $_POST["{$prefix}_weight_step"][$i];
+                $fee = $this->emptyStringToNull($_POST["{$prefix}_fee"][$i]);
+                $rate = $this->emptyStringToNull($_POST["{$prefix}_rate"][$i]);
+                $weight_step = $this->emptyStringToNull($_POST["{$prefix}_weight_step"][$i]);
                 $override = new WBS_Shipping_Rate_Override($class, $fee, $rate, $weight_step);
                 $overrides->add($override);
             }
@@ -470,7 +471,7 @@
             return $this->generate_decimal_html($key, $data);
         }
 
-        function generate_shipping_class_overrides_html($key, $data)
+        public function generate_shipping_class_overrides_html($key, $data)
         {
             $prefix = $this->plugin_id . $this->id . '_' . $key;
 
@@ -669,6 +670,15 @@
             }
 
             return wc_float_to_string($value);
+        }
+
+        private function emptyStringToNull($value)
+        {
+            if ($value === '') {
+                $value = null;
+            }
+
+            return $value;
         }
 
         /**

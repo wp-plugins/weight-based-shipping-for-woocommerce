@@ -43,7 +43,7 @@
         margin-top: 0.5em;
     }
 
-    .wbs-cta-button:hover {
+    .wbs-cta-button:hover, .wbs-cta-button:focus {
         color: #fff;
     }
 
@@ -69,7 +69,7 @@
             color: #436c01;
         }
 
-        .wbs-cta-button--green:hover {
+        .wbs-cta-button--green:hover, .wbs-cta-button--green:focus {
             background: #9dda67; /* Old browsers */
             background: -moz-linear-gradient(top, #9dda67 0%, #70971f 100%); /* FF3.6+ */
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9dda67), color-stop(100%, #70971f)); /* Chrome,Safari4+ */
@@ -95,7 +95,7 @@
             color: #065478;
         }
 
-        .wbs-cta-button--blue:hover {
+        .wbs-cta-button--blue:hover, .wbs-cta-button--blue:focus {
             background: #4cc6ff; /* Old browsers */
             background: -moz-linear-gradient(top, #4cc6ff 0%, #0078b0 100%); /* FF3.6+ */
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4cc6ff), color-stop(100%, #0078b0)); /* Chrome,Safari4+ */
@@ -121,7 +121,7 @@
             color: #9c5918;
         }
 
-        .wbs-cta-button--orange:hover {
+        .wbs-cta-button--orange:hover, .wbs-cta-button--orange:focus {
             background: #fca14b; /* Old browsers */
             background: -moz-linear-gradient(top, #fca14b 0%, #c5650b 100%); /* FF3.6+ */
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fca14b), color-stop(100%, #c5650b)); /* Chrome,Safari4+ */
@@ -146,7 +146,7 @@
 
     @media (max-width: 1240px) {
         .wbs-cta-button {
-            width: 155px;
+            width: 235px;
             text-align: center;
             line-height: 35px;
         }
@@ -158,16 +158,6 @@
 </style>
 
 <div class="wbs-cta-buttons">
-    <a
-        class="wbs-cta-button wbs-cta-button--blue"
-        href="mailto:gravyzzap@gmail.com?subject=<?php echo esc_attr(rawurlencode("WBS customization: ?")) ?>"
-        target="_blank"
-        title="Need a modification? Drop us a line!"
-    >
-        <span class="wbs-cta-button__icon wbs-cta-button__icon--adjust"></span>
-        Customize
-        <em class="wbs-cta-button__sub">Need a modification? Drop us a line!</em>
-    </a>
 
     <a
         class="wbs-cta-button wbs-cta-button--orange"
@@ -176,18 +166,29 @@
         title="Have a question? Welcome to support forum!"
     >
         <span class="wbs-cta-button__icon wbs-cta-button__icon--question"></span>
-        Get Support
+        Community Support
         <em class="wbs-cta-button__sub">Have a question? Welcome to support forum!</em>
     </a>
 
     <a
         class="wbs-cta-button wbs-cta-button--green"
-        href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=gravyzzap%40gmail.com"
+        href="mailto:gravyzzap@gmail.com?subject=<?php echo esc_attr(rawurlencode("WBS support")) ?>"
         target="_blank"
-        title="Like this plugin? Say thanks to us!"
+        title="Direct email support. Paid and fast."
     >
         <span class="wbs-cta-button__icon wbs-cta-button__icon--gift"></span>
-        Donate
-        <em class="wbs-cta-button__sub">Like this plugin? Say thanks to us!</em>
+        Premium Support
+        <em class="wbs-cta-button__sub">Direct email support. Paid and fast.</em>
+    </a>
+
+    <a
+        class="wbs-cta-button wbs-cta-button--blue"
+        href="mailto:gravyzzap@gmail.com?subject=<?php echo esc_attr(rawurlencode("WBS customization")) ?>"
+        target="_blank"
+        title="Need a modification? Drop us a line!"
+    >
+        <span class="wbs-cta-button__icon wbs-cta-button__icon--adjust"></span>
+        Customization
+        <em class="wbs-cta-button__sub">Need a modification? Drop us a line!</em>
     </a>
 </div>
