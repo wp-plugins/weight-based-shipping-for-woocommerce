@@ -48,6 +48,8 @@
         {
             $wbsdir = dirname(__FILE__);
             require_once("{$wbsdir}/WBS_Profile_Manager.php");
+            require_once("{$wbsdir}/Upgrade/WBS_Upgrade_Notice.php");
+            require_once("{$wbsdir}/Upgrade/WBS_Upgrade_Notices.php");
             require_once("{$wbsdir}/WBS_Upgrader.php");
             require_once("{$wbsdir}/WC_Weight_Based_Shipping.php");
             require_once("{$wbsdir}/Model/WBS_Shipping_Class_Override.php");

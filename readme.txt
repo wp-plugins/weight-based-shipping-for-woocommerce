@@ -18,6 +18,10 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 == Changelog ==
 
+= 2.6.3 =
+* Improved upgrade warning system
+* Fixed warning about Shipping Classes Overrides changes
+
 = 2.6.2 =
 * Fixed Shipping Classes Overrides: always apply base Handling Fee
 

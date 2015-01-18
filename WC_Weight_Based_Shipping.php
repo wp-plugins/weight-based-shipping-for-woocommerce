@@ -324,9 +324,7 @@
 
         public function admin_options()
         {
-            if (!empty($_GET['hide_221_upgrade_notice']))
-            {
-                delete_option('woowbs_show_221_upgrade_notice');
+            if (WBS_Upgrader::instance()->removeUpgradeNotices()) {
                 $this->refresh();
             }
 
@@ -334,10 +332,8 @@
             $profiles = $manager->profiles();
             $profile = $manager->profile();
 
-            if (!empty($_GET['delete']))
-            {
-                if (isset($profile))
-                {
+            if (!empty($_GET['delete'])) {
+                if (isset($profile)) {
                     delete_option($profile->get_wp_option_name());
                 }
 
