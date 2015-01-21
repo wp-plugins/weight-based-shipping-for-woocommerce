@@ -20,6 +20,8 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 <img src="https://ps.w.org/weight-based-shipping-for-woocommerce/assets/screenshot-1.png?rev=1059105" />
 
+![Alt text](/assets/screenshot-2.png)
+
 == Changelog ==
 
 = 2.6.3 =
