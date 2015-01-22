@@ -16,6 +16,8 @@ Plugin adds a simple weight based shipping method to WooCommerce. You can have m
 
 You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
+Latest version and more info available here: http://codecanyon.net/item/weight-based-shipping-for-woocommerce/10099013.
+
 == Changelog ==
 
 = 2.6.3 =
