@@ -20,9 +20,12 @@ Latest version and more info available here: http://codecanyon.net/item/weight-b
 
 == Changelog ==
 
-= 2.6.4 =
-* Fixed texts/spelling
-* Code-style fixes
+= 2.6.6 =
+* Introduced 'wbs_profile_settings_form' filter for better 3d-party extensions support
+* Removed partial localization
+
+= 2.6.5 =
+* Min/Max Shipping Price options
 
 = 2.6.3 =
 * Improved upgrade warning system
