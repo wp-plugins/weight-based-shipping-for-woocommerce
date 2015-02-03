@@ -109,3 +109,4 @@ Previously, weight based shipping option has not been shown to user if total wei
 
 1. An example configuration
 2. Another configuration example
+3. Customer perspective
