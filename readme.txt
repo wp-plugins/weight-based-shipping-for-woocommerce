@@ -1,9 +1,8 @@
 === Weight based shipping for WooCommerce ===
 Contributors: dangoodman
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=8UNB4AKDG724Q&lc=US
 Tags: woocommerce, shipping, weight, commerce, ecommerce, shop
 Requires at least: 3.8
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,13 +18,6 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 Latest version and more info available here: http://codecanyon.net/item/weight-based-shipping-for-woocommerce/10099013.
 
 == Changelog ==
-
-= 2.6.6 =
-* Introduced 'wbs_profile_settings_form' filter for better 3d-party extensions support
-* Removed partial localization
-
-= 2.6.5 =
-* Min/Max Shipping Price options
 
 = 2.6.3 =
 * Improved upgrade warning system
@@ -109,4 +101,3 @@ Previously, weight based shipping option has not been shown to user if total wei
 
 1. An example configuration
 2. Another configuration example
-3. Customer perspective

@@ -261,7 +261,7 @@
                 $field['description'] = wbst(@$field['description'], $placeholders);
             }
 
-            $this->form_fields = apply_filters('wbs_profile_settings_form', $this->form_fields);
+            $this->form_fields = apply_filters('wbs_profile_settings_form', $this->form_fields, $this);
         }
 
         public function calculate_shipping()
