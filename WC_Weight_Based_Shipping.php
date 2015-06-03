@@ -17,20 +17,23 @@
         /** @var WBS_Shipping_Class_Override_Set */
         public $shipping_class_overrides;
 
+        public $_stub = false;
 
-        public function __construct($profile_id = null)
+
+        public function __construct($profileId = null)
         {
-            $process_admin_options = !isset($profile_id);
+            $manager = WBS_Profile_Manager::instance();
 
-            $this->id = WBS_Profile_Manager::instance()->find_suitable_id($profile_id);
-            $this->profile_id = $profile_id;
+            // Force loading profiles when called from WooCommerce 2.3.9- save handler
+            // to activate process_admin_option() with appropriate hook
+            if (!isset($profileId)) {
+                $manager->profiles();
+            }
+
+            $this->id = $manager->find_suitable_id($profileId);
+            $this->profile_id = $profileId;
 
             $this->method_title = __('Weight Based', 'woowbs');
-
-            if ($process_admin_options)
-            {
-                add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
-            }
 
             $this->init();
         }
@@ -376,20 +379,22 @@
             if (!isset($profile))
             {
                 $profile = new self();
-
-                if (($source_profile_id = $_GET['duplicate']) != null &&
-                    ($source_profile = $manager->profile($source_profile_id)) != null)
-                {
-                    $tmp_profile = clone($source_profile);
-                    $tmp_profile->id = $profile->id;
-                    $tmp_profile->profile_id = $profile->profile_id;
-                    $tmp_profile->name .= ' ('._x('copy', 'noun', 'woowbs').')';
-                    $tmp_profile->settings['name'] = $tmp_profile->name;
-
-                    $profile = $tmp_profile;
-                }
-
+                $profile->_stub = true;
                 $profiles[] = $profile;
+            }
+
+            if ($profile->_stub &&
+                ($sourceProfileId = @$_GET['duplicate']) != null &&
+                ($sourceProfile = $manager->profile($sourceProfileId)) != null)
+            {
+                $duplicate = clone($sourceProfile);
+                $duplicate->id = $profile->id;
+                $duplicate->profile_id = $profile->profile_id;
+                $duplicate->name .= ' ('._x('copy', 'noun', 'woowbs').')';
+                $duplicate->settings['name'] = $duplicate->name;
+
+                $profiles[array_search($profile, $profiles, true)] = $duplicate;
+                $profile = $duplicate;
             }
 
             $multiple_profiles_available = count($profiles) > 1;
@@ -402,8 +407,6 @@
             ?>
                 <h3><?php esc_html_e('Weight based shipping', 'woowbs'); ?></h3>
                 <p><?php esc_html_e('Lets you calculate shipping based on total weight of the cart. You can have multiple configurations active.', 'woowbs'); ?></p>
-
-                <?php include(dirname(__FILE__).'/cta-buttons.php') ?>
 
             <?php if (!$multiple_profiles_available): ?>
                 <?php echo $create_profile_link_html ?><br><br><br>
@@ -443,7 +446,7 @@
             $this->init();
 
             $clone = WBS_Profile_Manager::instance()->profile($this->profile_id);
-            if (isset($clone)) {
+            if (isset($clone) && $clone !== $this) {
                 $clone->init();
             }
 

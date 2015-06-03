@@ -65,14 +65,8 @@
 
         public function find_suitable_id(&$profile_id)
         {
-            if (empty($profile_id))
-            {
-                $profile_id = $this->current_profile_id();
-            }
-
-            if (empty($profile_id))
-            {
-                throw new Exception("Weight based shipping profile detection is not enabled for user space for security reason.");
+            if (!$profile_id && !($profile_id = $this->current_profile_id())) {
+                return $profile_id = null;
             }
 
             $id_base = 'WC_Weight_Based_Shipping';
@@ -147,26 +141,39 @@
             {
                 $this->profile_instances = array();
 
-                $registered_profile_ids = array();
+                $profileIds = array();
                 {
                     foreach (array_keys(wp_load_alloptions()) as $option)
                     {
                         $matches = array();
-                        if (preg_match("/^woocommerce_WC_Weight_Based_Shipping_(\\w+)_settings$/", $option, $matches))
-                        {
-                            $registered_profile_ids[] = $matches[1];
+                        if (preg_match("/^woocommerce_WC_Weight_Based_Shipping_(\\w+)_settings$/", $option, $matches)) {
+                            $profileIds[] = $matches[1];
                         }
                     }
 
-                    if (empty($registered_profile_ids))
-                    {
-                        $registered_profile_ids[] = $this->new_profile_id();
+                    if (empty($profileIds)) {
+                        $profileIds[] = $this->new_profile_id();
                     }
                 }
 
-                foreach ($registered_profile_ids as $profile_id)
+                foreach ($profileIds as $profileId) {
+                    $this->profile_instances[$profileId] = new WC_Weight_Based_Shipping($profileId);
+                }
+
+                if (is_admin() &&
+                    ($editingProfileId = @$_GET['wbs_profile']) &&
+                    !isset($this->profile_instances[$editingProfileId]))
                 {
-                    $this->profile_instances[$profile_id] = new WC_Weight_Based_Shipping($profile_id);
+                    $editingProfile = new WC_Weight_Based_Shipping($editingProfileId);
+                    $editingProfile->_stub = true;
+                    $this->profile_instances[$editingProfileId] = $editingProfile;
+                }
+
+                if ($currentProfile = $this->profile()) {
+                    add_action(
+                        'woocommerce_update_options_shipping_' . $currentProfile->id,
+                        array($currentProfile, 'process_admin_options')
+                    );
                 }
             }
 
