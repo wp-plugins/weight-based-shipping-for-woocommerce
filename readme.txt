@@ -19,6 +19,9 @@ Latest version and more info available here: http://codecanyon.net/item/weight-b
 
 == Changelog ==
 
+= 2.6.8 =
+* Fixed: plugin settings are not changed on save with WooCommerce 2.3.10 (WooCommerce 2.3.10 compatibility issue) 
+
 = 2.6.6 =
 * Introduced 'wbs_profile_settings_form' filter for better 3d-party extensions support
 * Removed partial localization
