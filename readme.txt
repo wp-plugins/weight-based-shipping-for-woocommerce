@@ -17,6 +17,8 @@ You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
 Latest version and more info available here: http://codecanyon.net/item/weight-based-shipping-for-woocommerce/10099013.
 
+Featured solution: [Tree Table Rate Shipping](http://tablerateshipping.com)
+
 == Changelog ==
 
 = 2.6.8 =
