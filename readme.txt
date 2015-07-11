@@ -11,13 +11,11 @@ Simple weight based shipping method for WooCommerce
 
 == Description ==
 
-[Upgrade to Tree Table Rate Shipping](http://tablerateshipping.com)
-
 Plugin adds a simple weight based shipping method to WooCommerce. You can have multiple configurations active depending on countries and max weight you need to handle. See Screenshots tab for details.
 
 You can find plugin settings under WooCommerce -> Settings -> Shipping section.
 
-Latest version and more info available here: http://codecanyon.net/item/weight-based-shipping-for-woocommerce/10099013.
+Check out [advanced shipping plugin for WooCommerce](http://tablerateshipping.com)
 
 == Changelog ==
 
