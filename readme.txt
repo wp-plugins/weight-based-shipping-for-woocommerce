@@ -1,26 +1,30 @@
-=== Weight based shipping for WooCommerce ===
+=== Weight Based Shipping for WooCommerce ===
 Contributors: dangoodman
-Tags: woocommerce, shipping, weight, commerce, ecommerce, shop
+Tags: ecommerce, woocommerce, shipping, woocommerce shipping, weight-based shipping, conditional free shipping,
+conditional flat rate, table rate shipping, weight, subtotal, country, shipping classes
 Requires at least: 3.8
 Tested up to: 4.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Simple weight based shipping method for WooCommerce
+Simple yet flexbile weight-based shipping for WooCommerce
 
 == Description ==
 
-Plugin adds a simple weight based shipping method to WooCommerce. You can have multiple configurations active depending on countries and max weight you need to handle. See Screenshots tab for details.
+Plugin adds a weight-based shipping method to WooCommerce. With the plugin you can create multiple
+shipping options active depending on order weight, subtotal or shipping destination.
 
-You can find plugin settings under WooCommerce -> Settings -> Shipping section.
+[Plugin overview](http://robertryan.ie/the-best-weight-based-shipping-plugin-for-woocommerce/)
+by [Robert Ryan](http://robertryan.ie/)
+[youtube https://www.youtube.com/watch?v=JBDVKqfs_Ag]
 
-Check out [advanced shipping plugin for WooCommerce](http://tablerateshipping.com).
+Also check out our [advanced shipping plugin for WooCommerce](http://tablerateshipping.com).
 
 == Changelog ==
 
 = 2.6.8 =
-* Fixed: plugin settings are not changed on save with WooCommerce 2.3.10 (WooCommerce 2.3.10 compatibility issue) 
+* Fixed: plugin settings are not changed on save with WooCommerce 2.3.10 (WooCommerce 2.3.10 compatibility issue)
 
 = 2.6.6 =
 * Introduced 'wbs_profile_settings_form' filter for better 3d-party extensions support
@@ -42,7 +46,7 @@ Check out [advanced shipping plugin for WooCommerce](http://tablerateshipping.co
 = 2.6.0 =
 * Min/Max Subtotal condition support
 
-= 2.5.1 = 
+= 2.5.1 =
 * Introduce "wbs_remap_shipping_class" filter to provide 3dparty plugins an ability to alter shipping cost calculation
 * Wordpress 4.1 compatibility testing
 
@@ -62,7 +66,6 @@ Check out [advanced shipping plugin for WooCommerce](http://tablerateshipping.co
 = 2.4.1 =
 
 * Updated pot-file required for translations
-* Updated Russian translation
 * Added three nice buttons to plugin settings page
 * Prevent buttons in Actions column from wrapping on multiple lines
 
@@ -75,7 +78,6 @@ Check out [advanced shipping plugin for WooCommerce](http://tablerateshipping.co
 * Duplicate profile feature
 * New 'Weight Step' option for rough gradual shipping price calculation
 * Added more detailed description to the Handling Fee and Shipping Rate fields to make their purpose clear
-* Added Russian translation
 * Plugin prepared for localization
 * Refactoring
 
@@ -109,5 +111,6 @@ Previously, weight based shipping option has not been shown to user if total wei
 
 == Screenshots ==
 
-1. An example configuration
-2. Another configuration example
+1. A configuration example
+2. Another rule settings
+3. How that could look to customer
