@@ -4,6 +4,8 @@ Tags: ecommerce, woocommerce, shipping, woocommerce shipping, weight-based shipp
 conditional flat rate, table rate shipping, weight, subtotal, country, shipping classes
 Requires at least: 3.8
 Tested up to: 4.3
+WC requires at least: 2.1
+WC tested up to: 2.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,7 +21,7 @@ shipping options active depending on order weight, subtotal or shipping destinat
 by [Robert Ryan](http://robertryan.ie/)
 [youtube https://www.youtube.com/watch?v=JBDVKqfs_Ag]
 
-Also check out our [advanced shipping plugin for WooCommerce](http://tablerateshipping.com).
+Also check out our advanced [table rate shipping plugin for WooCommerce](http://tablerateshipping.com).
 
 == Changelog ==
 
