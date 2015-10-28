@@ -53,45 +53,43 @@
             $this->type             = 'order';
             $this->tax_status       = $this->get_option('tax_status');
 
-            $this->fee = $this->get_option('fee');
-            $this->settings['fee'] = $this->format_float($this->fee, '');
+            $this->fee = (float)$this->get_option('fee');
+            $this->settings['fee'] = $this->formatFloat($this->fee);
 
-            $this->rate = $this->get_option('rate');
-            $this->settings['rate'] = $this->format_float($this->rate, '');
+            $this->rate = (float)$this->get_option('rate');
+            $this->settings['rate'] = $this->formatFloat($this->rate);
 
-            $this->min_price = $this->get_option('min_price');
-            $this->settings['min_price'] = $this->validate_positive_float($this->min_price);
+            $this->min_price = $this->validate_positive_float($this->get_option('min_price'));
+            $this->settings['min_price'] = $this->formatFloat($this->min_price);
 
             $this->max_price = $this->validate_max_value($this->get_option('max_price'), $this->min_price);
-            $this->settings['max_price'] = $this->format_float($this->max_price, '');
+            $this->settings['max_price'] = $this->formatFloat($this->max_price);
 
             $this->extra_weight_only = $this->get_option('extra_weight_only');
 
             $this->weight_step = $this->validate_positive_float($this->get_option('weight_step'));
-            $this->settings['weight_step'] = $this->format_float($this->weight_step, '');
+            $this->settings['weight_step'] = $this->formatFloat($this->weight_step);
 
             $this->min_weight = $this->validate_positive_float($this->get_option('min_weight'));
-            $this->settings['min_weight'] = $this->format_float($this->min_weight, '');
+            $this->settings['min_weight'] = $this->formatFloat($this->min_weight);
 
             $this->max_weight = $this->validate_max_value($this->get_option('max_weight'), $this->min_weight);
-            $this->settings['max_weight'] = $this->format_float($this->max_weight, '');
+            $this->settings['max_weight'] = $this->formatFloat($this->max_weight);
 
             $this->min_subtotal = $this->validate_positive_float($this->get_option('min_subtotal'));
-            $this->settings['min_subtotal'] = $this->format_float($this->min_subtotal, '');
+            $this->settings['min_subtotal'] = $this->formatFloat($this->min_subtotal);
 
             $this->max_subtotal = $this->validate_max_value($this->get_option('max_subtotal'), $this->min_subtotal);
-            $this->settings['max_subtotal'] = $this->format_float($this->max_subtotal, '');
+            $this->settings['max_subtotal'] = $this->formatFloat($this->max_subtotal);
 
             $this->subtotal_with_tax = $this->get_option('subtotal_with_tax') === 'yes';
 
-            if (empty($this->countries))
-            {
+            if (empty($this->countries)) {
                 $this->availability = $this->settings['availability'] = 'all';
             }
 
             $this->shipping_class_overrides = $this->get_option('shipping_class_overrides');
-            if ($this->shipping_class_overrides == null)
-            {
+            if ($this->shipping_class_overrides == null) {
                 $this->shipping_class_overrides = new WBS_Shipping_Class_Override_Set();
             }
         }
@@ -166,7 +164,7 @@
                 'fee'        => array
                 (
                     'title'       => __('Handling Fee', 'woowbs'),
-                    'type'        => 'positive_decimal',
+                    'type'        => 'decimal',
                     'description' =>
                         __('Fee excluding tax, e.g. <code>3.50</code>({{currency}}).', 'woowbs').'<br />'.
                         __('Constant part of shipping price. Leave it empty or zero if your shipping price depends only on order weight.', 'woowbs'),
@@ -174,7 +172,7 @@
                 'rate'       => array
                 (
                     'title'       => __('Shipping Rate', 'woowbs'),
-                    'type'        => 'positive_decimal',
+                    'type'        => 'decimal',
                     'description' =>
                         __('Set your shipping price for 1 {{weight_unit}}. Example: <code>1.95</code>({{currency}}/{{weight_unit}}).', 'woowbs').'<br />'.
                         __('Dynamic part of shipping price. Leave it empty or zero if your shipping price does not depend on order weight.', 'woowbs'),
@@ -182,7 +180,7 @@
                 'min_price' => array
                 (
                     'title'       => __('Min Shipping Price', 'woowbs'),
-                    'type'        => 'positive_decimal',
+                    'type'        => 'decimal',
                     'description' =>
                         __('A lower bound on shipping price', 'woowbs').'<br />'.
                         __('Total shipping price increased if it\'s below this value.', 'woowbs'),
@@ -190,7 +188,7 @@
                 'max_price' => array
                 (
                     'title'       => __('Max Shipping Price', 'woowbs'),
-                    'type'        => 'positive_decimal',
+                    'type'        => 'decimal',
                     'description' =>
                         __('An upper bound on shipping price', 'woowbs').'<br />'.
                         __('Total shipping price decreased if it\'s above this value.', 'woowbs'),
@@ -228,14 +226,14 @@
                 'min_subtotal' => array
                 (
                     'title'       => __('Min Subtotal', 'woowbs'),
-                    'type'        => 'positive_decimal',
+                    'type'        => 'decimal',
                     'description' =>
                         __('The shipping option will not be shown during the checkout process if subtotal is less than this value. Example: <code>14.95</code>({{currency}}).'),
                 ),
                 'max_subtotal' => array
                 (
                     'title'       => __('Max Subtotal', 'woowbs'),
-                    'type'        => 'positive_decimal',
+                    'type'        => 'decimal',
                     'description' =>
                         __('The shipping option will not be shown during the checkout process if subtotal exceeds this limit. Example: <code>150</code>({{currency}}). Leave blank to disable.', 'woowbs'),
                 ),
@@ -299,7 +297,7 @@
             /** @var WBS_Cart_Item_Bucket[] $buckets */
             $buckets = array(); {
                 foreach ($cart->get_cart() as $item_id => $item) {
-                    /** @var WC_Product_Simple $product */
+                    /** @var WC_Product $product */
                     $product = $item['data'];
 
                     $class = apply_filters('wbs_remap_shipping_class', $product->get_shipping_class(), $item_id, $this);
@@ -488,10 +486,10 @@
 
             foreach ((array)@$_POST["{$prefix}_class"] as $i => $class)
             {
-                $fee = $this->emptyStringToNull($_POST["{$prefix}_fee"][$i]);
-                $rate = $this->emptyStringToNull($_POST["{$prefix}_rate"][$i]);
-                $weight_step = $this->emptyStringToNull($_POST["{$prefix}_weight_step"][$i]);
-                $override = new WBS_Shipping_Rate_Override($class, $fee, $rate, $weight_step);
+                $fee = $this->receiveDecimalInput($_POST["{$prefix}_fee"][$i]);
+                $rate = $this->receiveDecimalInput($_POST["{$prefix}_rate"][$i]);
+                $weightStep = $this->receiveDecimalInput($_POST["{$prefix}_weight_step"][$i]);
+                $override = new WBS_Shipping_Rate_Override($class, $fee, $rate, $weightStep);
                 $overrides->add($override);
             }
 
@@ -557,9 +555,9 @@
 
                                     echo '</select>
                                     </td>
-                                    <td><input type="text" value="' . esc_attr($override->getFee()) . '" name="' . esc_attr( $prefix .'_fee[' . $i . ']' ) . '" size="4" class="wc_input_price" /></td>
-                                    <td><input type="text" value="' . esc_attr($override->getRate()) . '" name="' . esc_attr( $prefix .'_rate[' . $i . ']' ) . '" size="4" class="wc_input_price" /></td>
-                                    <td><input type="text" value="' . esc_attr($override->getWeightStep()) . '" name="' . esc_attr( $prefix .'_weight_step[' . $i . ']' ) . '" size="4" class="wc_input_decimal" /></td>
+                                    <td><input type="text" value="' . esc_attr(wc_format_decimal($override->getFee())) . '" name="' . esc_attr( $prefix .'_fee[' . $i . ']' ) . '" size="4" class="wc_input_decimal" /></td>
+                                    <td><input type="text" value="' . esc_attr(wc_format_decimal($override->getRate())) . '" name="' . esc_attr( $prefix .'_rate[' . $i . ']' ) . '" size="4" class="wc_input_decimal" /></td>
+                                    <td><input type="text" value="' . esc_attr(wc_format_decimal($override->getWeightStep())) . '" name="' . esc_attr( $prefix .'_weight_step[' . $i . ']' ) . '" size="4" class="wc_input_decimal" /></td>
                                 </tr>';
                                 }
                             ?>
@@ -592,8 +590,8 @@
 						   				?>\
 						   			</select>\
 						   		</td>\
-								<td><input type="text" name="<?php echo $prefix; ?>_fee[' + size + ']" size="4" class="wc_input_price" /></td>\
-								<td><input type="text" name="<?php echo $prefix; ?>_rate[' + size + ']" size="4" class="wc_input_price" /></td>\
+								<td><input type="text" name="<?php echo $prefix; ?>_fee[' + size + ']" size="4" class="wc_input_decimal" /></td>\
+								<td><input type="text" name="<?php echo $prefix; ?>_rate[' + size + ']" size="4" class="wc_input_decimal" /></td>\
 								<td><input type="text" name="<?php echo $prefix; ?>_weight_step[' + size + ']" size="4" class="wc_input_decimal" /></td>\
 							</tr>').appendTo('#<?php echo $this->id; ?>_flat_rates table tbody');
 
@@ -694,23 +692,18 @@
             return $max;
         }
 
-        private function format_float($value, $zero_replacement = 0)
+        private function formatFloat($value, $zeroReplacement = '')
         {
-            if ($value == 0)
-            {
-                return $zero_replacement;
+            if ($value == 0) {
+                return $zeroReplacement;
             }
 
             return wc_float_to_string($value);
         }
 
-        private function emptyStringToNull($value)
+        private function receiveDecimalInput($value)
         {
-            if ($value === '') {
-                $value = null;
-            }
-
-            return $value;
+            return $value === '' ? null : wc_format_decimal(trim(stripslashes($value)));
         }
 
         /**
@@ -754,11 +747,11 @@
                         </td>
 
                         <td>
-                            <?php echo $this->format_float($profile->min_weight) . ' — ' . $this->format_float($profile->max_weight, '&infin;'); ?>
+                            <?php echo $this->formatFloat($profile->min_weight, '0') . ' — ' . $this->formatFloat($profile->max_weight, '&infin;'); ?>
                         </td>
 
                         <td>
-                            <?php echo esc_html($this->format_float($profile->fee, '-')); ?>
+                            <?php echo esc_html($this->formatFloat($profile->fee, '-')); ?>
                         </td>
 
                         <td>
@@ -766,7 +759,7 @@
                         </td>
 
                         <td>
-                            <?php echo esc_html($this->format_float($profile->weight_step, '-')); ?>
+                            <?php echo esc_html($this->formatFloat($profile->weight_step, '-')); ?>
                         </td>
 
                         <td class="status">

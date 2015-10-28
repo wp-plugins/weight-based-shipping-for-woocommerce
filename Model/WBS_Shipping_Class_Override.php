@@ -62,9 +62,9 @@
             $this->weightStep = $weightStep;
         }
 
-        private static function sanitize($value, $allowNnull = false, $sanitizer = 'floatval')
+        private static function sanitize($value, $allowNull = false, $sanitizer = 'floatval')
         {
-            if ($value !== null || !$allowNnull) {
+            if ($value !== null || !$allowNull) {
                 $value = $sanitizer($value);
             }
 

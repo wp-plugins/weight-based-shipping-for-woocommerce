@@ -25,6 +25,9 @@ Also check out our advanced [table rate shipping plugin for WooCommerce](http://
 
 == Changelog ==
 
+= 2.6.9 =
+* Fixed: inconsistent decimal input handling in Shipping Classes section (https://wordpress.org/support/topic/please-enter-in-monetary-decimal-issue)
+
 = 2.6.8 =
 * Fixed: plugin settings are not changed on save with WooCommerce 2.3.10 (WooCommerce 2.3.10 compatibility issue)
 
